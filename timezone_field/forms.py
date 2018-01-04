@@ -8,6 +8,8 @@ class TimeZoneFormField(forms.TypedChoiceField):
 
         def coerce_to_pytz(val):
             try:
+                if not isinstance(val, str):
+                    val = str(val)
                 return pytz.timezone(val)
             except pytz.UnknownTimeZoneError:
                 raise ValidationError("Unknown time zone: '%s'" % val)
